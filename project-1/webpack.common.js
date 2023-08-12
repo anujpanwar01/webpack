@@ -3,7 +3,7 @@ const isDev = process.env.NODE_ENV === "development";
 
 module.exports = {
   mode: isDev ? "development" : "production", // by default it's production mode, in production it's minify the code
-  entry: "./src/index.js",
+  entry: { main: "./src/index.js", thirdParty: "./src/third.party.js" },
   //   devtool: "eval-source-map", // by default it's using the eval
   module: {
     rules: [
@@ -26,11 +26,30 @@ module.exports = {
           "sass-loader", // 1. compile scss to css
         ],
       },
+      {
+        test: /\.html$/, // every file which ends with .scss
+        use: [
+          {
+            loader: "html-loader",
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              esModule: false,
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
     new htmlPlugin({
-      template: "./index.html",
+      template: "./index.ejs",
       title: isDev ? "anuj panwar" : "Anuj Panwar",
       heading: isDev ? "Welcome!" : "Welcome guys!",
     }),

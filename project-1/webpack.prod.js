@@ -1,6 +1,7 @@
 const path = require("path");
 const common = require("./webpack.common");
-const { merge } = require('webpack-merge');
+const { merge } = require("webpack-merge");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = merge(common, {
   mode: "production", // by default it's production mode, in production it's minify the code
@@ -13,7 +14,10 @@ module.exports = merge(common, {
      * So now every time js file name will be changed but we hardcoded that into the html file
      * TODO: to fix that we need to plugin for that.
      **/
-    filename: "bundle.[contenthash].js",
+    filename: "[name].bundle.[contenthash].js",
     path: path.resolve(__dirname, "build"), //__dirname = current working directory
+    assetModuleFilename: "images/[name].[hash][ext]",
+    publicPath: "./",
   },
+  plugins: [new CleanWebpackPlugin()],
 });

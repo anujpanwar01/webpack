@@ -17,7 +17,7 @@ module.exports = merge(common, {
      * So now every time js file name will be changed but we hardcoded that into the html file
      * TODO: to fix that we need to plugin for that.
      **/
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "build"), //__dirname = current working directory
   },
 });
